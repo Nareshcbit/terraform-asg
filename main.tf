@@ -1,3 +1,19 @@
+provider "aws"{
+  region = "ap-south-1"
+}
+
+
+terraform {
+  backend "s3" {
+    # Replace this with your bucket name!
+    bucket         = "terraform-nxgcloud-infra-development"
+    key            = "global/infra/asg.tfstate"
+    region         = "ap-south-1"
+  }
+}
+
+
+
 data "aws_ami" "ubuntu" {
 most_recent = true
 owners = ["099720109477"] # Canonical
