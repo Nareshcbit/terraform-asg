@@ -40,3 +40,18 @@ resource "aws_launch_configuration" "this" {
   user_data             = "${var.user_data}"
   key_name              = "${var.key_name}"
 }
+
+
+
+resource "aws_autoscaling_group" "this" {
+  name                 = "${var.name}-asg"
+  launch_configuration = "${aws_launch_configuration.this.name}"
+  vpc_zone_identifier  = split(",", var.subnets)
+
+  min_size             = "${var.min_size}"
+  max_size             = "${var.max_size}"
+  desired_capacity     = "${var.desired_capacity}"
+
+  health_check_grace_period = "${var.health_check_grace_period}"
+
+}
