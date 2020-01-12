@@ -32,7 +32,11 @@ owners = ["099720109477"] # Canonical
 
 
 resource "aws_launch_configuration" "this" {
-  name          = "${var.launch_config_name}"
-  image_id      = "${data.aws_ami.ubuntu.id}"
-  instance_type = "t2.micro"
+  name                  = "${var.name}-config"
+  image_id              = var.image_id == "" ? data.aws_ami.ubuntu.id : var.image_id
+  instance_type         = var.instance_type
+  iam_instance_profile  = var.iam_profile
+  security_groups       = var.security_group_ids == "" ? [] : split(",", var.security_group_ids)
+  user_data             = "${var.user_data}"
+  key_name              = "${var.key_name}"
 }
