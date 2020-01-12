@@ -1,18 +1,3 @@
-provider "aws"{
-  region = "ap-south-1"
-}
-
-
-terraform {
-  backend "s3" {
-    # Replace this with your bucket name!
-    bucket         = "terraform-nxgcloud-infra-development"
-    key            = "global/infra/asg.tfstate"
-    region         = "ap-south-1"
-  }
-}
-
-
 
 data "aws_ami" "ubuntu" {
 most_recent = true
@@ -39,6 +24,16 @@ resource "aws_launch_configuration" "this" {
   security_groups       = var.security_group_ids == "" ? [] : split(",", var.security_group_ids)
   user_data             = "${var.user_data}"
   key_name              = "${var.key_name}"
+
+  root_block_device {
+      volume_type = "standard"
+      volume_size = 100
+      delete_on_termination = true
+    }
+
+    lifecycle {
+      create_before_destroy = true
+    }
 }
 
 
