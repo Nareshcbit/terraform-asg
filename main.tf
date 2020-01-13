@@ -48,5 +48,6 @@ resource "aws_autoscaling_group" "this" {
   desired_capacity     = "${var.desired_capacity}"
 
   health_check_grace_period = "${var.health_check_grace_period}"
+  target_group_arns     = var.target_group_arns == "" ? [] : split(",", var.target_group_arns)
 
 }

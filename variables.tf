@@ -17,11 +17,12 @@ variable "user_data" {
 
 #ASG
 variable "subnets" { default = "subnet-0d66acf329840523a"}
-
 variable "min_size" { default = 1}
 variable "max_size" { default = 1}
 variable "desired_capacity" { default = 1}
 variable "health_check_grace_period" { default = 15}
+variable "target_group_arns" { default = ""}
+
 
 variable "common_tags" {
     type = "map"
